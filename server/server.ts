@@ -1,6 +1,8 @@
 import express = require('express');
 import bodyParser = require("body-parser");
+import { Music } from 'music-app-models';
 
+var music = new Music();
 
 var app = express();
 

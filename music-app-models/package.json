@@ -1,0 +1,16 @@
+{
+  "name": "music-app-models",
+  "version": "1.0.0",
+  "description": "models module for not repeating classes",
+  "main": "typeScript/index.js",
+  "types": "typeScript/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
+  },
+  "author": "Icaro-Nunes",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.3.3333"
+  }
+}
