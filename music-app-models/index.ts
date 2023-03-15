@@ -1,7 +1,7 @@
-import { Song, Genre } from './src/Song';
-import { User } from './src/User';
-import { Category } from './src/Category';
-import { Playlist, Privacy } from './src/Playlist';
+import { Song, Genre } from './src/data_model/Song';
+import { User } from './src/data_model/User';
+import { Category } from './src/data_model/Category';
+import { Playlist, Privacy } from './src/data_model/Playlist';
 
 export = {
     Song,
