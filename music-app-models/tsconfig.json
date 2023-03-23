@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
       "module": "commonjs",
+      "moduleResolution": "nodenext",
       "target": "es2015",
       "declaration": true,
       "outDir": "./typeScript"
     },
     "include": [
       "src/**/*.ts",
-      "index.ts"
+      "src/data_model/index.ts"
     ]
 }

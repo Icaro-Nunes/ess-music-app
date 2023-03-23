@@ -1,8 +1,9 @@
 import express = require('express');
 import bodyParser = require("body-parser");
-import { Music } from 'music-app-models';
+import {  } from 'music-app-models';
+import { Song } from 'music-app-models/data_model';
 
-var music = new Music();
+var song = new Song();
 
 var app = express();
 

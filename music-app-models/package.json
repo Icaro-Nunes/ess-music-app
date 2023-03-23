@@ -10,7 +10,19 @@
   },
   "author": "Icaro-Nunes",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./typeScript/index.js",
+      "require": "./typeScript/index.js",
+      "types": "./typeScript/index.d.ts"
+    },
+    "./data_model": {
+      "import": "./typeScript/data_model/index.js",
+      "require": "./typeScript/data_model/index.js",
+      "types": "./typeScript/data_model/index.d.ts"
+    }
+  },
   "devDependencies": {
-    "typescript": "^3.3.3333"
+    "typescript": "^4.7.0"
   }
 }
