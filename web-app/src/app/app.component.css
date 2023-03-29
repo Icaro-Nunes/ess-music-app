@@ -1,0 +1,25 @@
+body {
+    padding: 3rem 5rem;
+    overflow-x: hidden;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.878);
+}
+div.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #000000c0;
+    color: white;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px #9039D4;
+  }
+div.container-home-logout {
+    width: 100%;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}

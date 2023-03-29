@@ -1,6 +1,14 @@
 <html>
     <body>
-        <nav-bar></nav-bar>
+        <div class="toolbar" *ngIf="ismenurequired" role="banner">
+            <a routerLink="">Home</a>
+            <a routerLink="/user">Usuario</a>
+            <a routerLink="/cadastrar-musicas">Cadastrar Musica</a>
+            <a routerLink="/lista-musicas">Lista Musica</a>
+            <div class="container-home-logout"> 
+               <a routerLink="/login">Logout</a>
+              </div>
+          </div>
         <router-outlet></router-outlet>
     </body>
 </html>

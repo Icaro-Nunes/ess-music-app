@@ -1,0 +1,87 @@
+{
+  "user": [
+    {},
+    {
+      "id": "admin",
+      "name": "Admin User",
+      "password": "admin",
+      "email": "admin@admin.com",
+      "gender": "Masculino",
+      "role": "admin",
+      "isactive": true
+    },
+    {
+      "id": "x",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "x2",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "x3",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "x4",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "x5",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "x1",
+      "name": "x",
+      "password": "xxxxxx",
+      "email": "x@x",
+      "gender": "Masculino",
+      "role": "",
+      "isactive": false
+    },
+    {
+      "id": "iqkqy-n",
+      "name": "",
+      "password": "",
+      "email": "",
+      "gender": "",
+      "role": "usuario",
+      "isactive": false
+    }
+  ],
+  "role": [
+    {
+      "code": "admin",
+      "name": "Admin"
+    },
+    {
+      "code": "usuario",
+      "name": "Usuario"
+    }
+  ]
+}

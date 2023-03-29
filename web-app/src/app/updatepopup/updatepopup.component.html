@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-header>
+        <h1>Editar Usuário</h1>
+    </mat-card-header>
+    <mat-card-content>
+        <form class="example-form" [formGroup]="registerform" (ngSubmit)="updateuser()">
+
+         
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo de Usuário</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="">Selecio o Cargo</mat-option>
+                    <mat-option *ngFor="let item of rolelist" [value]="item.code">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+
+            <div>
+                <mat-checkbox formControlName="isactive?" class="example-margin">Ativo</mat-checkbox>
+            </div>
+                <div>
+                    <button mat-raised-button color="primary">Atualizar</button>
+                    <a mat-dialog-close mat-raised-button color="accent">Fechar</a>
+                  </div>
+        </form>
+    </mat-card-content>
+</mat-card>
