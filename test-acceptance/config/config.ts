@@ -7,6 +7,10 @@ export let config: Config = {
     SELENIUM_PROMISE_MANAGER: false,
 
     capabilities: {
+        // browserName: 'firefox',
+        // 'moz:firefoxOptions': {
+        //     'args': ['-P \"Debug\"']
+        // }
         browserName: 'chrome'
     },
 
