@@ -2,7 +2,7 @@ import { Artist } from './src/Artist';
 import { Album } from './src/Album';
 import { Genre } from './src/Genre';
 import { Song } from './src/Song';
-import { User } from './src/User';
+import { User, UserRole } from './src/User';
 import { Category } from './src/Category';
 import { Playlist, Privacy } from './src/Playlist';
 import { PlaylistCategory } from './src/PlaylistCategory';
@@ -17,6 +17,7 @@ export {
     Song,
     Genre,
     User,
+    UserRole,
     Category,
     Playlist,
     Privacy,
