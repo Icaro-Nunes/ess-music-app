@@ -18,8 +18,6 @@ class JsonDBData {
 }
 
 class JsonDB extends JsonDBData {
-    data: JsonDBData;
-
     dbFilePath:string;
 
     writing: boolean = false;
@@ -29,13 +27,32 @@ class JsonDB extends JsonDBData {
         this.dbFilePath = path;
     }
 
+    data(){
+        const data = new JsonDBData();
+        data.users = this.users;
+        data.artists = this.artists;
+        data.albumSeq = this.albumSeq;
+        data.albums = this.albums;
+        data.songSeq = this.songSeq;
+        data.songs = this.songs;
+        data.playlistSeq = this.playlistSeq;
+        data.playlists = this.playlists;
+        data.categories = this.categories;
+        data.playlistCategories = this.playlistCategories;
+        data.playlistSongs = this.playlistSongs;
+        data.userFollowPlaylists = this.userFollowPlaylists;
+        data.userSongHistories = this.userSongHistories;
+
+        return data;
+    }
+
     saveChanges(){
         if(this.writing)
             return;
         
         this.writing = true;
 
-        fs.writeFile(this.dbFilePath, JSON.stringify(this as JsonDBData), null, () => {this.writing = false});
+        fs.writeFile(this.dbFilePath, JSON.stringify(this.data()), null, () => {this.writing = false});
     }
 }
 
@@ -44,8 +61,10 @@ function initDatabase(dbFilePath: string):JsonDB{
 
     if(!fs.existsSync(dbFilePath)){
         jsonDatabase = new JsonDB(dbFilePath);
+        let data = new JsonDBData();
+        Object.assign(data, jsonDatabase);
 
-        fs.writeFileSync(dbFilePath, JSON.stringify(jsonDatabase));
+        fs.writeFileSync(dbFilePath, JSON.stringify(jsonDatabase.data()));
 
         return jsonDatabase;
     }
