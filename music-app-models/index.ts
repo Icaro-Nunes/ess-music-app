@@ -1,4 +1,7 @@
-import { Song, Genre } from './src/Song';
+import { Artist } from './src/Artist';
+import { Album } from './src/Album';
+import { Genre } from './src/Genre';
+import { Song } from './src/Song';
 import { User } from './src/User';
 import { Category } from './src/Category';
 import { Playlist, Privacy } from './src/Playlist';
@@ -9,6 +12,8 @@ import { UserSongHistory } from './src/UserSongHistory';
 import { copy } from './src/copy';
 
 export {
+    Artist,
+    Album,
     Song,
     Genre,
     User,
