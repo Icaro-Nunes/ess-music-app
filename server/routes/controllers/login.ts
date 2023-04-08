@@ -7,18 +7,19 @@ export const login = async (req: Request, res: Response) => {
     const email = req.body.email
     const password = req.body.password
 
-    const user = context.userRepository.getByEmail(email)
+    const user = context.userRepository.getByEmail(email);
 
-    const validPassword = bcrypt.compareSync(password, user.senha)
+    const validPassword = bcrypt.compareSync(password, user.password);
+
     if (!validPassword) {
-        return res.status(401).send('Nome de usuário ou senha incorretos.')
+        return res.status(401).send('Nome de usuário ou senha incorretos.');
     }
 
     // Gera um token JWT contendo o id do usuário
     const token = jwt.sign({
-        _name: user.nome,
-        _email: user.email
-
+        _name: user.password,
+        _email: user.email,
+        _role: user.role
     }, 'minha_chave_secreta')
 
     res.cookie('jwt', token, {
