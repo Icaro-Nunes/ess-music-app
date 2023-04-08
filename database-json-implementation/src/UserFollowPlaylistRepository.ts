@@ -1,12 +1,22 @@
 import { IUserFollowPlaylistRepository } from 'database-abstraction-layer';
 import { copy, UserFollowPlaylist } from 'music-app-models';
 import { JsonDB } from './json-handling/json-handling';
+import { negatePredicate } from './utils/predicate-ops';
 
 export class UserFollowPlaylistRepository implements IUserFollowPlaylistRepository {
     jsonDb: JsonDB;
 
     constructor(jsonDb: JsonDB){
         this.jsonDb = jsonDb;
+    }
+
+    equivalentUserFollowPlaylistQuery(ufp: UserFollowPlaylist){
+        return (
+            (u: UserFollowPlaylist) =>
+                u.playlist_owner_email == ufp.playlist_owner_email &&
+                u.playlist_number == ufp.playlist_number &&
+                u.follower_email == ufp.follower_email
+        );
     }
 
     getAllByUserEmail(email: string): UserFollowPlaylist[] {
@@ -16,17 +26,13 @@ export class UserFollowPlaylistRepository implements IUserFollowPlaylistReposito
     }
 
     add(instance: UserFollowPlaylist): boolean {
-        if(
-            this.jsonDb.userFollowPlaylists.find(
-                p => 
-                    p.playlist_owner_email == instance.playlist_owner_email &&
-                    p.playlist_number == instance.playlist_number &&
-                    p.follower_email == instance.follower_email
-            )
-        )
+        if(this.jsonDb.userFollowPlaylists.find(this.equivalentUserFollowPlaylistQuery(instance)))
             return false;
 
-        this.jsonDb.userFollowPlaylists.push(instance);
+        const newUfp = new UserFollowPlaylist();
+        Object.assign(newUfp, instance);
+
+        this.jsonDb.userFollowPlaylists.push(newUfp);
         this.jsonDb.saveChanges();
 
         return true;
@@ -37,16 +43,13 @@ export class UserFollowPlaylistRepository implements IUserFollowPlaylistReposito
     }
 
     delete(instance: UserFollowPlaylist): boolean {
-        let index = this.jsonDb.userFollowPlaylists.indexOf(instance);
+        const ufp = this.jsonDb.userFollowPlaylists.find(this.equivalentUserFollowPlaylistQuery(instance));
 
-        if(index == -1)
+        if(!ufp)
             return false;
         
-        this.jsonDb.userFollowPlaylists = this.jsonDb.userFollowPlaylists.filter(
-            p => p.playlist_owner_email != instance.playlist_owner_email &&
-            p.playlist_number != instance.playlist_number &&
-            p.follower_email != instance.follower_email
-        );
+        this.jsonDb.userFollowPlaylists = this.jsonDb.userFollowPlaylists
+            .filter(negatePredicate(this.equivalentUserFollowPlaylistQuery(ufp)));
 
         this.jsonDb.saveChanges();
 
