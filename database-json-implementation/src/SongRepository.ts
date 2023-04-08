@@ -14,8 +14,8 @@ export class SongRepository implements ISongRepository {
     equivalentSongQuery(song: Song) {
         return (
             (s: Song) =>
-                s.artist_id == song.artist_id &&
-                s.playlist_number == song.playlist_number &&
+                s.album_artist_id == song.album_artist_id &&
+                s.album_number == song.album_number &&
                 s.song_number == song.song_number
         )
     }
@@ -26,23 +26,17 @@ export class SongRepository implements ISongRepository {
             .map(al => [al.artist_id, al.album_number] as [string, number]);
 
         return this.jsonDb.songs
-            .filter(s => album_id_list.find(i => compareTuples(i, [s.artist_id, s.playlist_number]))).map(copy);
+            .filter(s => album_id_list.find(i => compareTuples(i, [s.album_artist_id, s.album_number]))).map(copy);
     }
 
     add(instance: Song): boolean {
-        const createdSong = new Song();
+        if(!this.jsonDb.albums.find(al => al.artist_id == instance.album_artist_id && al.album_number == instance.album_number))
+            return false;
         
+        const createdSong = new Song();
         Object.assign(createdSong, instance);
         
-        let autoIncrementedSongNumber = this.jsonDb.songs.length == 0 ? 1 :
-            this.jsonDb.songs
-                .filter(s => 
-                    s.artist_id == instance.artist_id &&
-                    s.playlist_number == instance.playlist_number
-                )
-                .map(s => s.song_number)
-                .reduce((a, b) => a > b ? a : b)
-            + 1;
+        const autoIncrementedSongNumber = this.jsonDb.songSeq++;
 
         createdSong.song_number = autoIncrementedSongNumber;
 

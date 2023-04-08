@@ -23,15 +23,13 @@ export class PlaylistRepository implements IPlaylistRepository {
     }
 
     add(instance: Playlist): boolean {
+        if(!this.jsonDb.users.find(u => u.email == instance.owner_email))
+            return false;
+
         const newPlaylist = new Playlist();
         Object.assign(newPlaylist, instance);
         
-        let autoIncrementedPlaylistNumber = this.jsonDb.playlists.length == 0 ? 1 :
-            this.jsonDb.playlists
-                .filter(p => p.owner_email == instance.owner_email)
-                .map(a => a.number)
-                .reduce((a, b) => a > b ? a : b)
-            + 1;
+        let autoIncrementedPlaylistNumber = this.jsonDb.playlistSeq++;
 
         newPlaylist.number = autoIncrementedPlaylistNumber;
 

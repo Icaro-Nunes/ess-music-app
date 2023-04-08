@@ -19,18 +19,13 @@ export class AlbumRepository implements IAlbumRepository {
     }
 
     add(instance: Album): boolean {
-        const createdAlbum = new Album();
+        if(!this.jsonDb.artists.find(a => a.id == instance.artist_id))
+            return false;
 
+        const createdAlbum = new Album();
         Object.assign(createdAlbum, instance);
 
-        let autoIncrementedAlbumNumber = this.jsonDb.albums.length == 0 ? 1 :
-            this.jsonDb.albums
-                .filter(a => 
-                    a.artist_id == instance.artist_id
-                )
-                .map(a => a.album_number)
-                .reduce((a, b) => a > b ? a : b)
-            + 1;
+        let autoIncrementedAlbumNumber = this.jsonDb.albumSeq++;
 
         createdAlbum.album_number = autoIncrementedAlbumNumber;
 
