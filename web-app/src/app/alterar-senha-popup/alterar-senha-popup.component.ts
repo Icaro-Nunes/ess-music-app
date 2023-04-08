@@ -33,7 +33,7 @@ export class AlterarSenhaPopupComponent {
   registerform = this.builder.group({
     id: this.builder.control(''),
     name: this.builder.control(''),
-    password: this.builder.control(''),
+    password:this.builder.control('', Validators.compose([Validators.required, Validators.minLength(6)])),
     email: this.builder.control(''),
     gender: this.builder.control(''),
     role: this.builder.control(''),

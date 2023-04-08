@@ -32,14 +32,14 @@ export class AddpopupComponent {
   }
   rolelist: any;
 
-  registerform = this.builder.group({
-    id: this.builder.control(''),
-    name: this.builder.control(''),
-    password: this.builder.control(''),
-    email: this.builder.control(''),
-    gender: this.builder.control(''),
-    role: this.builder.control('', Validators.required),
-    isactive: this.builder.control(false)
+  registerform=this.builder.group({
+    id:this.builder.control('', Validators.required),
+    name:this.builder.control('', Validators.required),
+    password:this.builder.control('', Validators.compose([Validators.required, Validators.minLength(6)])),
+    email:this.builder.control('', Validators.compose([Validators.required, Validators.email])),
+    gender:this.builder.control(''),
+    role:this.builder.control(''),
+    isactive:this.builder.control(true)
   });
 
   adduser() {
@@ -49,7 +49,7 @@ export class AddpopupComponent {
         this.dialog.close();
       })
     }else{
-      this.toastr.warning('Por favor, selecione um cargo!')
+      this.toastr.warning('Por favor, insira um dado válido!')
     }
   }
 }

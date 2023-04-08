@@ -15,23 +15,19 @@
     
                         <mat-form-field class="wrap-input100 validate-input">
                             <mat-label>Usuário</mat-label>
-                            <input matInput formControlName="id">
-                        </mat-form-field>
-            
-                        <mat-form-field class="wrap-input100 validate-input">
-                            <mat-label>Nome</mat-label>
-                            <input matInput formControlName="name">
-                        </mat-form-field>
-            
-                        <mat-form-field class="wrap-input100 validate-input">
-                            <mat-label>Senha</mat-label>
-                            <input type="password" matInput formControlName="password">
+                            <input matInput formControlName="id" id="username">
                         </mat-form-field>
             
                         <mat-form-field class="wrap-input100 validate-input">
                             <mat-label>Email</mat-label>
-                            <input matInput formControlName="email">
+                            <input matInput formControlName="email" id="email">
                         </mat-form-field>
+
+                        <mat-form-field class="wrap-input100 validate-input">
+                            <mat-label>Senha</mat-label>
+                            <input type="password" matInput formControlName="password" id="password">
+                        </mat-form-field>
+        
                         <!-- <div>
                             <mat-radio-group formControlName="gender" aria-label="Gênero">
                                 <mat-radio-button value="Masculino">Masculino</mat-radio-button>

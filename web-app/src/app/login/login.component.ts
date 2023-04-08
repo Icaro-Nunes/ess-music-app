@@ -10,48 +10,37 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private builder: FormBuilder, private toastr: ToastrService, 
+  constructor(private builder: FormBuilder, private toastr: ToastrService,
     private service: AuthService, private router: Router) {
-      sessionStorage.clear();
+    sessionStorage.clear();
   }
 
   userdata: any;
 
   loginform = this.builder.group({
-    username: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.required),
+    email: this.builder.control('', Validators.compose([Validators.required, Validators.email])),
+    password: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(6)]))
   })
 
-  proceedlogin() {
-    //Login com sucesso
-    if (this.loginform.valid) {
-      //   this.service.Proceedregister(this.loginform.value).subscribe(res=> {
-      //     this.toastr.success('Registro feito com sucesso!');
-      //     this.router.navigate(['login'])
-      //   })
-      // } 
-      // //Falha no Login
-      // else {
-      //   this.toastr.warning('Por favor, colocar um dado válido!')
-      // }
-      this.service.Getbycode(this.loginform.value.username).subscribe(res => {
-        this.userdata = res;
-        // console.log(this.userdata);
-        //Se acertar a senha:
-        if (this.userdata.password === this.loginform.value.password) {
-          //Se o usuário tiver permissao para entrar:
-          if (this.userdata.isactive) {
-            sessionStorage.setItem('username', this.userdata.id);
-            sessionStorage.setItem('userrole', this.userdata.role);
-            this.router.navigate(['/initial-page'])
-          } else {
-            this.toastr.error('Por favor, renove seu cadastro na Dizer ou contate nosso suporte');
-          }
+  async proceedlogin() {
+    const email = (document.querySelector('#email') as HTMLInputElement).value;
+    const password = (document.querySelector('#password') as HTMLInputElement).value;
 
-        } else {
-          this.toastr.error('Credenciais Inválidas');
-        }
-      })
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, password: password })
+    });
+
+    if (response.ok) {
+      const result = await response.text();
+      //console.log(result);
+      this.router.navigate(['initial-page'])
+    } else {
+      const error = await response.text();
+      //console.log(error);
     }
   }
 }

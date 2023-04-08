@@ -2,120 +2,30 @@
   "user": [
     {},
     {
-      "id": "x",
-      "name": "x",
-      "password": "xxxxxx",
-      "email": "x@x",
-      "gender": "Masculino",
-      "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "q_nlscc",
-      "name": "",
-      "password": "",
-      "email": "",
+      "id": "admin",
+      "name": "Admin",
+      "password": "admin",
+      "email": "admin@dizer.com",
       "gender": "male",
       "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "flRxLMq",
-      "name": "",
-      "password": "",
-      "email": "",
-      "gender": "",
-      "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "s",
-      "name": "s",
-      "password": "sssss",
-      "email": "s@s",
-      "gender": "",
-      "role": "",
-      "isactive": false
-    },
-    {
-      "id": "m5Pf6oy",
-      "name": "",
-      "password": "",
-      "email": "",
-      "gender": "",
-      "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "testeadicao",
-      "name": "xxxxxx",
-      "password": "xxxxxxxxx",
-      "email": "teste@adicao",
-      "gender": "",
-      "role": "admin",
       "isactive": true
     },
     {
-      "id": "x222",
-      "name": "xxxxxx",
-      "password": "xxxxxx",
-      "email": "x@x",
-      "gender": "Masculino",
-      "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "x222222",
-      "name": "xxxxxx",
-      "password": "xxxxxx",
-      "email": "x@x",
-      "gender": "Masculino",
-      "role": "admin",
-      "isactive": false
-    },
-    {
-      "id": "x1xxx",
-      "name": "x",
-      "password": "xxxxxx",
-      "email": "x@x",
-      "gender": "",
-      "role": "",
-      "isactive": false
-    },
-    {
-      "id": "admin",
-      "name": "admin",
-      "password": "admin1",
-      "email": "admin@admin",
+      "id": "pcsb",
+      "name": "Pedro Basilio",
+      "password": "pcsb01",
+      "email": "pcsb@cin.ufpe.br",
       "gender": "",
       "role": "",
       "isactive": true
     },
     {
-      "id": "admin1",
-      "name": "admin",
-      "password": "admin",
-      "email": "admin@xc",
+      "id": "teste2",
+      "name": "teste2",
+      "password": "teste2",
+      "email": "teste@teste",
       "gender": "",
       "role": "",
-      "isactive": true
-    },
-    {
-      "id": "admin3",
-      "name": "admin",
-      "password": "admin3",
-      "email": "admin@admin",
-      "gender": "",
-      "role": "",
-      "isactive": true
-    },
-    {
-      "id": "victorluiz",
-      "name": "Victor Luiz",
-      "password": "123456789",
-      "email": "victorluiz@dizer.com",
-      "gender": "",
-      "role": "usuario",
       "isactive": true
     }
   ],
