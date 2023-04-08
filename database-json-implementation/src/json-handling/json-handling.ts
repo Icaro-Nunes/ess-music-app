@@ -1,9 +1,11 @@
 import fs = require('fs');
-import { Category, Playlist, PlaylistCategory, PlaylistSong, Song, User, UserFollowPlaylist, UserSongHistory } from 'music-app-models';
+import { Album, Artist, Category, Playlist, PlaylistCategory, PlaylistSong, Song, User, UserFollowPlaylist, UserSongHistory } from 'music-app-models';
 
 
 class JsonDB {
     users: User[] = [];
+    artists: Artist[] = [];
+    albums: Album[] = [];
     songs: Song[] = [];
     playlists: Playlist[] = [];
     categories: Category[] = [];

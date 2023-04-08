@@ -1,12 +1,24 @@
 import { IPlaylistSongRepository } from 'database-abstraction-layer';
 import { copy, PlaylistSong } from 'music-app-models';
 import { JsonDB } from './json-handling/json-handling';
+import { negatePredicate } from './utils/predicate-ops';
 
 export class PlaylistSongRepository implements IPlaylistSongRepository {
     jsonDb: JsonDB;
 
     constructor(jsonDb: JsonDB){
         this.jsonDb = jsonDb;
+    }
+
+    equivalentPlaylistSongQuery(playlistSong: PlaylistSong){
+        return (
+            (ps: PlaylistSong) =>
+                ps.playlist_owner_email == playlistSong.playlist_owner_email &&
+                ps.playlist_number == playlistSong.playlist_number &&
+                ps.song_album_artist_id == playlistSong.song_album_artist_id &&
+                ps.song_album_number == playlistSong.song_album_number &&
+                ps.song_number == playlistSong.song_number
+        );
     }
 
     getAllByPlaylist(owner_email: string, playlist_number: number): PlaylistSong[] {
@@ -18,17 +30,13 @@ export class PlaylistSongRepository implements IPlaylistSongRepository {
     }
 
     add(instance: PlaylistSong): boolean {
-        if(
-            this.jsonDb.playlistSongs.find(
-                p => 
-                    p.playlist_owner_email == instance.playlist_owner_email &&
-                    p.playlist_number == instance.playlist_number &&
-                    p.song_id == instance.song_id
-            )
-        )
+        if(this.jsonDb.playlistSongs.find(this.equivalentPlaylistSongQuery(instance)))
             return false;
 
-        this.jsonDb.playlistSongs.push(instance);
+        const newPs = new PlaylistSong();
+        Object.assign(newPs, instance);
+
+        this.jsonDb.playlistSongs.push(newPs);
         this.jsonDb.saveChanges();
 
         return true;
@@ -39,17 +47,12 @@ export class PlaylistSongRepository implements IPlaylistSongRepository {
     }
 
     delete(instance: PlaylistSong): boolean {
-        let index = this.jsonDb.playlistSongs.indexOf(instance);
+        const playlistSong = this.jsonDb.playlistSongs.find(this.equivalentPlaylistSongQuery(instance));
 
-        if(index == -1)
+        if(!playlistSong)
             return false;
         
-        this.jsonDb.playlistSongs = this.jsonDb.playlistSongs.filter(
-            p => p.playlist_owner_email != instance.playlist_owner_email &&
-            p.playlist_number != instance.playlist_number &&
-            p.song_id != instance.song_id
-        );
-
+        this.jsonDb.playlistSongs = this.jsonDb.playlistSongs.filter(negatePredicate(this.equivalentPlaylistSongQuery(playlistSong)));
         this.jsonDb.saveChanges();
 
         return true;
