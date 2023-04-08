@@ -14,35 +14,37 @@ export class UserRepository implements IUserRepository {
     }
 
     add(instance: User): boolean {
-        if(this.getByEmail(instance.email))
+        if(this.jsonDb.users.find(u => u.email == instance.email))
             return false;
         
-        this.jsonDb.users.push(instance);
+
+        const newUser = new User();
+        Object.assign(newUser, instance);
+
+        this.jsonDb.users.push(newUser);
         this.jsonDb.saveChanges();
 
         return true;
     }
 
     update(instance: User): boolean {
-        let usr = this.getByEmail(instance.email);
+        let usr = this.jsonDb.users.find(u => u.email == instance.email);
 
         if(!usr)
             return false;
         
-        usr.nome = instance.nome;
-        usr.senha = instance.senha;
-
+        Object.assign(usr, instance);
         this.jsonDb.saveChanges();
         
         return true;
     }
 
     delete(instance: User): boolean {
-        let index = this.jsonDb.users.indexOf(instance);
-
-        if(index == -1)
-            return false;
+        const user = this.jsonDb.users.find(u => u.email == instance.email)
         
+        if(!user)
+            return false;
+
         this.jsonDb.users = this.jsonDb.users.filter(u => u.email != instance.email);
         this.jsonDb.saveChanges();
 
@@ -50,9 +52,7 @@ export class UserRepository implements IUserRepository {
     }
 
     getAll(): User[] {
-        return this.jsonDb.users.map(
-            u => copy(u)
-        );
+        return this.jsonDb.users.map(copy);
     }
 
 }

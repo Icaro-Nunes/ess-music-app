@@ -1,6 +1,7 @@
 import { IPlaylistCategoryRepository } from 'database-abstraction-layer';
 import { copy, PlaylistCategory } from 'music-app-models';
 import { JsonDB } from './json-handling/json-handling';
+import { negatePredicate } from './utils/predicate-ops';
 
 export class PlaylistCategoryRepository implements IPlaylistCategoryRepository {
     jsonDb: JsonDB;
@@ -9,6 +10,14 @@ export class PlaylistCategoryRepository implements IPlaylistCategoryRepository {
         this.jsonDb = jsonDb;
     }
 
+    equivalentPlaylistCategory(playlistCategory: PlaylistCategory){
+        return (
+            (pc: PlaylistCategory) =>
+                pc.playlist_owner_email == playlistCategory.playlist_owner_email &&
+                pc.playlist_number == playlistCategory.playlist_number &&
+                pc.category_name == playlistCategory.category_name
+        );
+    }
 
     getAllByPlaylist(playlist_owner: string, playlist_number: number): PlaylistCategory[] {
         return this.jsonDb.playlistCategories.filter(
@@ -26,17 +35,13 @@ export class PlaylistCategoryRepository implements IPlaylistCategoryRepository {
     }
 
     add(instance: PlaylistCategory): boolean {
-        if(
-            this.jsonDb.playlistCategories.find(
-                p => 
-                    p.playlist_owner_email == instance.playlist_owner_email &&
-                    p.playlist_number == instance.playlist_number &&
-                    p.category_name == instance.category_name
-            )
-        )
+        if(this.jsonDb.playlistCategories.find(this.equivalentPlaylistCategory(instance)))
             return false;
         
-        this.jsonDb.playlistCategories.push(instance);
+        const newPc = new PlaylistCategory();
+        Object.assign(newPc, instance);
+
+        this.jsonDb.playlistCategories.push(newPc);
         this.jsonDb.saveChanges();
 
         return true;
@@ -47,17 +52,12 @@ export class PlaylistCategoryRepository implements IPlaylistCategoryRepository {
     }
 
     delete(instance: PlaylistCategory): boolean {
-        let index = this.jsonDb.playlistCategories.indexOf(instance);
+        const playlistCategory = this.jsonDb.playlistCategories.find(this.equivalentPlaylistCategory(instance));
 
-        if(index == -1)
+        if(!playlistCategory)
             return false;
         
-        this.jsonDb.playlistCategories = this.jsonDb.playlistCategories.filter(
-            p => p.playlist_owner_email != instance.playlist_owner_email &&
-            p.playlist_number != instance.playlist_number &&
-            p.category_name != instance.category_name
-        );
-
+        this.jsonDb.playlistCategories = this.jsonDb.playlistCategories.filter(negatePredicate(this.equivalentPlaylistCategory(playlistCategory)));
         this.jsonDb.saveChanges();
 
         return true;

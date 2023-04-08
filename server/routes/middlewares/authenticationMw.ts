@@ -3,12 +3,7 @@ import jwt = require('jsonwebtoken');
 import { JwtPayload } from 'jsonwebtoken'
 //import getJsonDatabase from '../utils/jsonDatabase';
 import { context } from '../../server';
-
-interface User {
-    nome: string
-    email: string
-    senha: string
-}
+import { User } from 'music-app-models';
 
 declare global {
     namespace Express {
@@ -31,7 +26,7 @@ export function authenticationMiddleware(req: Request, res: Response, next: Next
             return res.status(401).send('Usuário não autenticado.');
         }
 
-        const user = context.userRepository.getByEmail(claims._email)
+        const user = context.userRepository.getByEmail(claims._email);
         if (user.email != claims._email) {
             return res.status(401).send('Usuário não autenticado.');
         }

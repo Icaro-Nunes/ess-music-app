@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { hashPassword } from '../utils/bcryptUtils'
 import * as uuid from 'uuid';
-import { User } from 'music-app-models';
+import { User, UserRole } from 'music-app-models';
 import { context } from '../../server';
 
 export const register = async (req: Request, res: Response) => {
@@ -9,9 +9,9 @@ export const register = async (req: Request, res: Response) => {
         return res.status(400).send('Senha vazia.');
 
     const hashedPassword = await hashPassword(req.body.password)
-    const username = req.body.name
-    const email = req.body.email
-    const password = hashedPassword
+    const username = req.body.name;
+    const email = req.body.email;
+    const password = hashedPassword;
 
     // Valida se o email possui um "@"
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -21,8 +21,9 @@ export const register = async (req: Request, res: Response) => {
 
     const newUser: User = {
         email: email,
-        nome: username,
-        senha: password
+        name: username,
+        password: password,
+        role: UserRole.User
     }
 
     if (context.userRepository.add(newUser))

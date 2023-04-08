@@ -10,44 +10,31 @@ export class CategoryRepository implements ICategoryRepository {
     }
 
     add(instance: Category): boolean {
-        if(
-            this.jsonDb.categories.find(
-                c => 
-                    c.name == instance.name
-            )
-        )
+        if(this.jsonDb.categories.find(c => c.name == instance.name))
             return false;
         
-        this.jsonDb.categories.push(instance);
+        const newCategory = new Category();
+        Object.assign(newCategory, instance);
+
+        this.jsonDb.categories.push(newCategory);
         this.jsonDb.saveChanges();
 
         return true;
     }
 
     update(instance: Category): boolean {
-        if(
-            this.jsonDb.categories.find(
-                c => 
-                    c.name == instance.name
-            )
-        )
-            return false;
-        
-        this.jsonDb.categories.push(instance);
-        this.jsonDb.saveChanges();
-
-        return true;
+        return false;
     }
 
 
     delete(instance: Category): boolean {
-        let index = this.jsonDb.categories.indexOf(instance);
+        const category = this.jsonDb.categories.find(c => c.name == instance.name);
 
-        if(index == -1)
+        if(!category)
             return false;
         
         this.jsonDb.categories = this.jsonDb.categories.filter(
-            c => c.name
+            c => c.name != category.name
         );
 
         this.jsonDb.saveChanges();
@@ -56,8 +43,6 @@ export class CategoryRepository implements ICategoryRepository {
     }
 
     getAll(): Category[] {
-        return this.jsonDb.categories.map(
-            c => copy(c)
-        );
+        return this.jsonDb.categories.map(copy);
     }
 }

@@ -1,12 +1,24 @@
 import { IUserSongHistoryRepository } from 'database-abstraction-layer';
 import { copy, UserSongHistory } from 'music-app-models';
 import { JsonDB } from './json-handling/json-handling';
+import { negatePredicate } from './utils/predicate-ops';
 
 export class UserSongHistoryRepository implements IUserSongHistoryRepository {
     jsonDb: JsonDB;
 
     constructor(jsonDb: JsonDB){
         this.jsonDb = jsonDb;
+    }
+
+    equivalentUserSongHistoryQuery(ush: UserSongHistory) {
+        return (
+            (u: UserSongHistory) =>
+                u.user_email == ush.user_email &&
+                u.song_album_artist_id == ush.song_album_artist_id &&
+                u.song_album_number == ush.song_album_number &&
+                u.song_number == ush.song_number &&
+                u.timestamp == ush.timestamp
+        );
     }
 
     getAllByUserEmail(email: string): UserSongHistory[] {
@@ -16,17 +28,15 @@ export class UserSongHistoryRepository implements IUserSongHistoryRepository {
     }
 
     add(instance: UserSongHistory): boolean {
-        if(
-            this.jsonDb.userSongHistories.find(
-                ush =>
-                    ush.song_id == instance.song_id &&
-                    ush.user_email == instance.user_email &&
-                    ush.timestamp == instance.timestamp
-            )
-        )
+        if(this.jsonDb.userSongHistories.find(this.equivalentUserSongHistoryQuery(instance)))
             return false;
 
-        this.jsonDb.userSongHistories.push(instance);
+        const newUsh = new UserSongHistory();
+        Object.assign(newUsh, instance);
+
+        newUsh.timestamp = new Date();
+
+        this.jsonDb.userSongHistories.push(newUsh);
         this.jsonDb.saveChanges();
 
         return true;
@@ -37,18 +47,12 @@ export class UserSongHistoryRepository implements IUserSongHistoryRepository {
     }
 
     delete(instance: UserSongHistory): boolean {
-        let index = this.jsonDb.userSongHistories.indexOf(instance);
+        const usHistory = this.jsonDb.userSongHistories.find(this.equivalentUserSongHistoryQuery(instance));
 
-        if(index == -1)
+        if(!usHistory)
             return false;
         
-        this.jsonDb.userSongHistories = this.jsonDb.userSongHistories.filter(
-            ush =>
-                ush.user_email != instance.user_email &&
-                ush.song_id != instance.song_id &&
-                ush.timestamp != instance.timestamp
-        );
-
+        this.jsonDb.userSongHistories = this.jsonDb.userSongHistories.filter(negatePredicate(this.equivalentUserSongHistoryQuery(instance)));
         this.jsonDb.saveChanges();
 
         return true;
