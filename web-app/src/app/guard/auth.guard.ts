@@ -1,45 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from '../service/auth.service';
-import { ToastrService } from 'ngx-toastr'
+import { CanActivate, Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthGuard implements CanActivate {
-  constructor(private service: AuthService, private router: Router, private toastr: ToastrService) {
 
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    if (this.service.IsloggedIn()) {
-      if (route.url.length > 0) {
-        let menu = route.url[0].path;
-        if (menu == 'usuario') {
-          if (this.service.GetUserrole()=='admin') {
-            return true;
-          } else {
-            this.toastr.warning('Voce não tem permissão para acessar a página');
-            this.router.navigate(['']);
-            return false;
-          }
-        } else{
-          return true;
-        }
-      } else {
-        return true;
-      }
+  canActivate(): boolean {
+    if (this.authService.isLoggedIn()) {
+      return true;
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
       return false;
     }
-
   }
 
 }
