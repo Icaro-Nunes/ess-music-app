@@ -4,16 +4,15 @@ Feature: Adicionar uma nova música na plataforma
 	Para que a plataforma se mantenha atualizada e o catálogo dos artistas 
 	completos
 
-
 Scenario: Adicionando uma nova música
-	Given Estou logado como "admin" com email "admin@dizer.com" e senha "admin"
-	And Estou na página do single "Cenário Louco" do artista "Bruno Miranda" 
+	Given Estou logado como o usuário Administrador de email "admin@dizer.com" e senha "admin"
+	And Estou na página do álbum "Cenário Louco" do artista "Bruno Miranda" 
 	And Eu quero adicionar a música "Cenário Louco"
 	When Eu clico em "Adicionar uma Nova Música"
 	And O sistema solicita as informações da música 
 	And Eu preencho os campos de "Nome da Música" com "Cenário Louco",  "Artista/Banda" com "Bruno Miranda" e "Ano de Lançamento" com "2022"
 	And Eu clico em "salvar"
-	Then A música "Cenário Louco" deve estar disponível na página do single "Cenário Louco" do artista "Bruno Miranda" após a adição com sucesso
+	Then A música "Cenário Louco" deve estar disponível na página do álbum "Cenário Louco" do artista "Bruno Miranda" após a adição com sucesso
 
 Scenario: Adicionando um novo single
 	Given Estou logado como "admin" com email "admin@dizer.com" e senha "admin"
@@ -23,7 +22,7 @@ Scenario: Adicionando um novo single
 	Then O sistema solicita as informações do single 
 	And Eu preencho os campos de "Nome do Single",  "Artista/Banda", "Ano de Lançamento"
 	And Eu clico em "salvar"
-	And O single "Cenário Louco" aparece disponível na página de singles do artista "Bruno Miranda"
+	And O álbum "Cenário Louco" aparece disponível na página de singles do artista "Bruno Miranda"
 
 Scenario: Erro ao adicionar um novo single
 	Given Estou logado como "admin" com email "admin@dizer.com" e senha "admin"
@@ -37,7 +36,7 @@ Scenario: Erro ao adicionar um novo single
 
 Scenario: Removendo uma música de um single
 	Given Estou logado como "admin" com email "admin@dizer.com" e senha "admin"
-	And Estou na página do single "Only Girl" da artista "Rihanna" 
+	And Estou na página do álbum "Only Girl" da artista "Rihanna" 
 	And Eu clico na opção ao lado da música "Only Girl"
 	And O sistema me exibe as opções "Tocar A Seguir", "Adicionar à fila", "Adicionar a Uma Playlist", "Remover Musica da Plataforma", "Ir Para Página do Artista", "Editar Informações" e "Compartilhar"
 	And Eu clico na opção de "Remover Musica da Plataforma"
@@ -48,11 +47,11 @@ Scenario: Removendo uma música de um single
 	
 Scenario: Atualizando um single
 	Given Estou logado como "admin" com email "admin@dizer.com" e senha "admin"
-	And Estou na página do single "When Am I Gonna Lose You" do artista "Local Natives" 
+	And Estou na página do álbum "When Am I Gonna Lose You" do artista "Local Natives" 
 	And Eu clico na opção de "Editar" na página do single
 	And O sistema me exibe uma página com as informações "Nome do Single", "Nome do Artista/Banda" e "Ano de Lançamento" de forma editável
 	When Eu mudo o "Ano de Lançamento" de "2017" para "2019"
 	And Eu clico em "Salvar Informações"
 	Then Uma mensagem de "Atualização Realizada" é exibida na tela
-	And Eu volto para página do single "When Am I Gonna Lose You" com o ano de lançamento "2019"
+	And Eu volto para página do álbum "When Am I Gonna Lose You" com o ano de lançamento "2019"
 	And Uma mensagem de êxito é exibida

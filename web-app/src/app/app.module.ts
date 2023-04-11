@@ -102,7 +102,7 @@ import { SelecionarPlaylistComponent } from './selecionar-playlist/selecionar-pl
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({timeOut: 10000})
   ],
   providers: [MusicaService, CadastraAlbumService],
   // providers: [],

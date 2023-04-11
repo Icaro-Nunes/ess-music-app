@@ -1,12 +1,16 @@
 import { defineSupportCode } from 'cucumber';
-import { browser, $, element, ElementArrayFinder, by, ExpectedConditions } from 'protractor';
+import { browser, $, element, ElementArrayFinder, by, ExpectedConditions, promise } from 'protractor';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 import request = require("request-promise");
-import { HttpClient } from 'selenium-webdriver/http';
-
 const base_url = "http://localhost:3000/";
 const base_front_url = "http://localhost:4200";
+
+export const sharedState: {
+    action: () => promise.Promise<void>
+} = {
+    action: null
+}
 
 async function loginAsUser(user_id: string, password: string){
     //Navegar até página de login
@@ -32,8 +36,20 @@ defineSupportCode(function ({ Given, When, Then }){
         await element(by.buttonText('Adicionar')).click();
     })
 
-    Then(/^O sistema mostra uma mensagem de "([^\"]*)"$/, async (message: string) => {
-        await expect(element(by.cssContainingText('*', message)).isPresent()).to.eventually.equal(true);
+    Then(/^O sistema mostra uma mensagem de "([^\"]*)"$/, {timeout: 10000}, async (message: string) => {
+        if(sharedState.action != null){
+            await sharedState.action();
+            sharedState.action = null;
+        }
+        
+        await expect(
+            browser.wait(
+                ExpectedConditions.presenceOf(element(by.cssContainingText('*', message))),
+                5000
+            )
+                .then(() => true)
+                .catch(() => false)
+        ).to.eventually.equal(true);
     })
 
 })
