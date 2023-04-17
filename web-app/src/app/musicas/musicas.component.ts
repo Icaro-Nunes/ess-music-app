@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Musica } from './musica';
 import { MusicaService } from './musicas.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 export class MusicasComponent implements OnInit {
-  constructor(private cadastraMusicaService: MusicaService, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private cadastraMusicaService: MusicaService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
   artistId: string = '';
   albumId: string = '';
   musica: Musica = new Musica();
@@ -23,10 +29,16 @@ export class MusicasComponent implements OnInit {
   }
 
   createMusica() {
+    if(this.musica.titulo == ""){
+      this.toastr.error("Campo inválido!");
+      return;
+    }
+
     this.cadastraMusicaService.createMusica(this.artistId, this.albumId, this.musica)
       .subscribe({
         next: (result: Musica | null) => {
           if (result) {
+            this.toastr.success("Música cadastrada!");
             this.musicas.push(result);
             this.musica = new Musica();
           }
