@@ -37,5 +37,13 @@ defineSupportCode(function ({ Given, When, Then }){
         await element(by.buttonText('Criar')).click();
     })
 
-    
+    When(/^Clico na playlist "([^\"]*)"$/, async(name: string) => {
+        await element(by.cssContainingText('td', name)).click();
+    })
+
+    When('Clico na opção "Editar Informações"', async() => {
+        await element(by.cssContainingText('li', 'Editar Informações')).click();
+    })
+
+
 })
