@@ -104,6 +104,15 @@
       "role": "user",
       "isactive": true,
       "historic": []
+    },
+    {
+      "id": "icaroGeovany",
+      "name": "Ícaro Nunes",
+      "password": "$2a$10$E8D3UOyUe2UL/MQUPHc8ROhShDDfn6HaixIieTfAEsFbJK52U/M/m",
+      "email": "icarolimanunes@gmail.com",
+      "role": "user",
+      "isactive": true,
+      "historic": []
     }
   ],
   "role": [
