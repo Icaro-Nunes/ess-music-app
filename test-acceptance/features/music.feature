@@ -24,10 +24,10 @@ Scenario: Adicionando música sem nome
 
 Scenario: Atualizando música com sucesso
 	Given Estou logado como o usuário Administrador de email "admin@dizer.com" e senha "admin"
-	And Estou na página do álbum "Hot Pink" do artista "Doja cat"
-	When Clico em "Editar informações" na música "Kiss me less"
+	And Estou na página do álbum "Planet Her" do artista "Doja cat"
+	When Clico em "Editar informações" na música "Kiss Me More (feat. SZA)"
 	And Preencho o campo de "Nome da Música" com "Do not kiss me at all"
-	And Clico em "Adicionar"
+	And Clico em "Salvar Alteração"
 	Then O sistema mostra uma mensagem de "Música cadastrada!"
 
 Scenario: Atualizando música sem nome

@@ -8,6 +8,8 @@ const base_front_url = "http://localhost:4200";
 
 defineSupportCode(function ({ Given, When, Then }){
     Given(/^Estou na página do álbum "([^\"]*)" do artista "([^\"]*)"$/, {timeout: 30000}, async (album: string, artist: string) => {
+        await browser.executeScript("document.body.style.zoom='80%'");
+
         await element(by.cssContainingText('a', 'Visualizar Artistas')).click();
 
         await expect(browser.getCurrentUrl()).to.eventually.equal(base_front_url + "/visualizar-artistas-admin");
@@ -50,11 +52,14 @@ defineSupportCode(function ({ Given, When, Then }){
             .element(by.css('button.dropbtn'));
 
 
-        // await browser.waitForAngular();
-        // await browser.actions().mouseMove(btn).perform();
-        btn.click();
+        // await browser.driver.executeScript('window.scrollTo(0,document.body.scrollHeight);').then(() => {});
+        await browser.driver.executeScript('window.scrollTo(0,0);');
+        await browser.executeScript("document.body.style.zoom='80%'");
 
-        await browser.wait(() => false, 4000).catch(() => {});
+        await browser.wait(() => false, 2000).catch(() => {});
+
+        await browser.waitForAngular();
+        await browser.actions().mouseMove(btn).perform();
         
         await btn
             .element(by.xpath('..'))
