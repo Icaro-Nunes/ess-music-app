@@ -3583,6 +3583,24 @@
       },
       "musicas": [],
       "seguidores": []
+    },
+    {
+      "id": 5,
+      "titulo": "Primeira",
+      "privacidade": "Pública",
+      "categoria": "MPB",
+      "url_foto_playlist": "https://images.pexels.com/photos/10404450/pexels-photo-10404450.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "usuario_dono": {
+        "id": "icaroGeovany",
+        "name": "Ícaro Nunes",
+        "password": "$2a$10$E8D3UOyUe2UL/MQUPHc8ROhShDDfn6HaixIieTfAEsFbJK52U/M/m",
+        "email": "icarolimanunes@gmail.com",
+        "role": "user",
+        "isactive": true,
+        "historic": []
+      },
+      "musicas": [],
+      "seguidores": []
     }
   ],
   "categorias": [
