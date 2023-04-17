@@ -8,7 +8,7 @@ import { HttpClient } from 'selenium-webdriver/http';
 const base_url = "http://localhost:3000/";
 const base_front_url = "http://localhost:4200";
 
-async function loginAsUser(user_id: string, password: string){
+export async function loginAsUser(user_id: string, password: string){
     //Navegar até página de login
     await browser.get(base_front_url);
     await element(by.buttonText('Login')).click();

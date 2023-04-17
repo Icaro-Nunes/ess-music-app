@@ -4,25 +4,17 @@ Feature: Criação de uma playlist
 	Para que eu possa adicionar novas músicas
 
 Scenario: Criando nova playlist
-	Given Eu estou logado como "icaroGeovany"
-	And Eu estou na página "Minhas Playlists"
-	When Eu clico na opção "Criar uma nova playlist"
-	And O sistema exibe uma tela para adicionar o nome, descrição e privacidade
-	And Preencho o campo "Nome" com "Playlist de Natal"
-	And Preencho o campo "descrição" com "Playlist das músicas natalinas"
-	And Seleciono o campo "privacidade" com "Playlist de Natal"
+	Given Estou logado com usuário "icaroGeovany" e senha "123456"
+	And Estou na página de minha "Biblioteca"
+	When Clico na opção "Criar nova playlist"
+	And Preencho os campos "Nome", "Privacidade", "Gênero" e "url_foto" com respectivamente "Playlist de Natal", "Pública", "Rock" e "https://images.pexels.com/photos/14463845/pexels-photo-14463845.jpeg?auto=compress&cs=tinysrgb&w=1600"
+	And Clico em "Criar"
+	Then O sistema mostra uma mensagem de "Playlist cadastrada!"
 
-	And Preencho todos os campos com respectivamente "Playlist de Natal", "Playlist das músicas natalinas" e seleciona opção "Pública"
-	And Eu clico em "Criar Playlist"
-	Then Eu estou na página da playlist "Playlist de Natal"
-
-Scenario: Erro na criação de uma nova playlist
-	Given Eu estou logado como "jv_soares"
-	And Eu estou na página "Minhas Playlists"
-	When Eu clico na opção "Criar uma nova playlist"
-	And O sistema exibe uma tela para adicionar "nome", "descrição" e "privacidade"
-	And Eu escrevo "Músicas do barcelona" em "nome"
-	And Eu escrevo "Músicas do melhor time do mundo" em "descrição"
-	And Eu não seleciono o tipo de privacidade em "privacidade"
-	And Eu clico em "Criar Playlist"
-	Then Eu recebo uma mensagem de erro "Um ou mais campos obrigatórios não preenchidos"
+Scenario: Criando nova playlist sem Nome
+	Given Estou logado com usuário "icaroGeovany" e senha "123456"
+	And Estou na página de minha "Biblioteca"
+	When Clico na opção "Criar nova playlist"
+	And Preencho os campos "Nome", "Privacidade", "Gênero" e "url_foto" com respectivamente "", "Pública", "Rock" e "https://images.pexels.com/photos/14463845/pexels-photo-14463845.jpeg?auto=compress&cs=tinysrgb&w=1600"
+	And Clico em "Criar"
+	Then O sistema mostra uma mensagem de "Campo inválido!"
