@@ -1,6 +1,6 @@
 Feature: Registro de álbum
     Como usuário Administrador
-    Quero cadastrar álbuns
+    Quero gerenciar o cadastro de álbuns
     Para cadastrar músicas
 
 
