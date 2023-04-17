@@ -4,6 +4,7 @@ import { Playlist } from '../playlist-admin/playlist';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Categoria } from '../criar-categoria/categoria';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastra-playlist',
@@ -12,17 +13,31 @@ import { Categoria } from '../criar-categoria/categoria';
 })
 
 export class CadastraPlaylistComponent implements OnInit {
-  constructor(private playlistService: PlaylistService, private router: Router, private http: HttpClient) {}
+  constructor(
+    private playlistService: PlaylistService,
+    private router: Router,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {}
   playlist: Playlist = new Playlist();
   categorias: Categoria[] = [];
   categoriasSelecionadas: Categoria[] = [];
 
   cadastraPlaylist() {
-    console.log(this.playlist)
+    console.log(this.playlist);
+    if(
+      this.playlist.titulo == '' ||
+      this.playlist.url_foto_playlist == '' ||
+      this.playlist.categoria == ''
+    ){
+      this.toastr.error('Campo inválido!');
+      return;
+    }
     this.playlistService.createPlaylist(this.playlist)
     .subscribe({
       next: (result: Playlist | null) => {
         if (result) {
+          this.toastr.success('Playlist cadastrada!');
           this.playlist = new Playlist();
         }
       },
