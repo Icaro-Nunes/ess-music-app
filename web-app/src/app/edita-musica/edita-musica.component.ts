@@ -3,6 +3,7 @@ import { Musica } from '../musicas/musica';
 import { MusicaService } from '../musicas/musicas.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edita-musica',
@@ -17,7 +18,8 @@ export class EditaMusicaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private musicaService: MusicaService,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {}
 
 
@@ -30,6 +32,12 @@ export class EditaMusicaComponent implements OnInit {
 
   editarMusica(musica: Musica) {
     const novoTitulo = (<HTMLInputElement>document.getElementById("musica-titulo")).value;
+    
+    if(novoTitulo == ''){
+      this.toastr.error('Campo inválido!');
+      return;
+    }
+
     this.http.put(this.taURL + "/musicas/" + String(this.id),
     { titulo: novoTitulo,
       albumId: this.musicaAntiga.albumId,
@@ -38,8 +46,11 @@ export class EditaMusicaComponent implements OnInit {
       artistaNome: this.musicaAntiga.artistaNome,
       tituloAlbum: this.musicaAntiga.tituloAlbum
     }).subscribe(() => {
+      this.toastr.success('Música atualizada!');
       console.log('Título atualizado com sucesso!');
-      window.history.back();
+      setTimeout(() => {
+        window.history.back();
+      }, 3000);
     }, (error) => {
       console.error('Ocorreu um erro ao atualizar o título da música:', error);
     });

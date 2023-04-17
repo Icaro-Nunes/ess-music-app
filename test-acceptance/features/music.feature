@@ -28,6 +28,12 @@ Scenario: Atualizando música com sucesso
 	When Clico em "Editar informações" na música "Kiss Me More (feat. SZA)"
 	And Preencho o campo de "Nome da Música" com "Do not kiss me at all"
 	And Clico em "Salvar Alteração"
-	Then O sistema mostra uma mensagem de "Música cadastrada!"
+	Then O sistema mostra uma mensagem de "Música atualizada!"
 
 Scenario: Atualizando música sem nome
+	Given Estou logado como o usuário Administrador de email "admin@dizer.com" e senha "admin"
+	And Estou na página do álbum "Planet Her" do artista "Doja cat"
+	When Clico em "Editar informações" na música "Alone"
+	And Preencho o campo de "Nome da Música" com ""
+	And Clico em "Salvar Alteração"
+	Then O sistema mostra uma mensagem de "Campo inválido!"
