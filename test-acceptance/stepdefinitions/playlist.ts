@@ -7,6 +7,10 @@ let expect = chai.expect;
 const base_url = "http://localhost:3000/";
 const base_front_url = "http://localhost:4200";
 
+async function fillSelect(selectHTMLElement, optionText: string){
+    await selectHTMLElement.element(by.cssContainingText('option', optionText)).click();
+}
+
 defineSupportCode(function ({ Given, When, Then }){
     Given(/^Estou logado com usuário "([^\"]*)" e senha "([^\"]*)"$/, async(user, password) => {
         await loginAsUser(<string> user, <string> password);
@@ -26,8 +30,8 @@ defineSupportCode(function ({ Given, When, Then }){
         await $("#playlist-nome").clear();
         await $("#playlist-nome").sendKeys(<string> name);
         
-        await $('#playlist-privacidade').element(by.cssContainingText('option', <string>privacy)).click();
-        await $('#playlist-categoria').element(by.cssContainingText('option', <string>genre)).click();
+        await fillSelect($('#playlist-privacidade'), <string> privacy);
+        await fillSelect($('#playlist-categoria'), <string> genre);
 
         await $("#playlist-url_foto_playlist").clear();
         await $("#playlist-url_foto_playlist").sendKeys(<string> url_photo);
