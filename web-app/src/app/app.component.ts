@@ -34,4 +34,9 @@ export class AppComponent implements DoCheck {
   pesquisar(){
     this.resultados.pesquisar()
   }
+
+  logout() {
+    this.service.logout()
+    this.router.navigate(['/login'])
+  }
 }

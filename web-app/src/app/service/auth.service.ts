@@ -42,6 +42,11 @@ export class AuthService {
     return localStorage.getItem('username') !== null;
   }
 
+  logout() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('userrole');
+  }
+
   GetUserRole(): string {
     return localStorage.getItem('userrole')?.toString() || '';
   }
