@@ -3,6 +3,7 @@ import { Playlist } from '../playlist-admin/playlist';
 import { ActivatedRoute } from '@angular/router';
 import { PlaylistService } from '../playlist-admin/playlist.service';
 import { HttpClient } from '@angular/common/http';
+import { Categoria } from '../criar-categoria/categoria';
 
 @Component({
   selector: 'app-editar-playlist',
@@ -19,6 +20,7 @@ export class EditarPlaylistComponent {
     private playlistService: PlaylistService,
     private http: HttpClient
   ) {}
+  categorias: Categoria[] = [];
 
 
   ngOnInit() {
@@ -26,6 +28,14 @@ export class EditarPlaylistComponent {
     this.playlistService.getPlaylistById(String(this.id)).subscribe(playlist => {
       this.playlist = playlist;
     });
+    this.http.get<any[]>('http://localhost:3000/categorias').subscribe(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    );
   }
 
   editarPlaylist() {
